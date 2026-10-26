@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Sourced by every tool here, to find the theme they read from and write into.
 #
 # The theme is its own repository, parker-brown-family/omarchy-bright-future-theme,

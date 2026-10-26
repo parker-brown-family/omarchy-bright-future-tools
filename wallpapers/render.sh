@@ -13,9 +13,7 @@
 set -euo pipefail
 
 . "$(dirname "$0")/../lib/theme.sh"
-SRC_DIR="$THEME_ROOT/backgrounds/src"
 BG_DIR="$THEME_ROOT/backgrounds"
-ROOT_DIR="$THEME_ROOT"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
