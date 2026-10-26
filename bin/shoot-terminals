@@ -35,7 +35,8 @@
 set -uo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-root="$(dirname "$here")"
+. "$here/../lib/theme.sh"
+root="$THEME_ROOT"
 WS=5
 KEEP=""
 CLOSE_ONLY=""

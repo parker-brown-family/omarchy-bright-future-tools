@@ -7,8 +7,9 @@
 # Dep: imagemagick (magick). The PNG is committed; rerun only to change the grade.
 set -euo pipefail
 
-SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
-BG_DIR="$(dirname "$SRC_DIR")"
+. "$(dirname "$0")/../lib/theme.sh"
+SRC_DIR="$THEME_ROOT/backgrounds/src"
+BG_DIR="$THEME_ROOT/backgrounds"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 

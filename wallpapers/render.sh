@@ -12,9 +12,10 @@
 # /usr/share/omarchy/logo.svg (basecamp/omarchy, MIT).
 set -euo pipefail
 
-SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
-BG_DIR="$(dirname "$SRC_DIR")"
-ROOT_DIR="$(dirname "$BG_DIR")"
+. "$(dirname "$0")/../lib/theme.sh"
+SRC_DIR="$THEME_ROOT/backgrounds/src"
+BG_DIR="$THEME_ROOT/backgrounds"
+ROOT_DIR="$THEME_ROOT"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 

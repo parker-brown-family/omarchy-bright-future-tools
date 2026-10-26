@@ -1,86 +1,44 @@
-# Bright Future
+# Bright Future — tools
 
-An Omarchy theme. Dark-space duotone: an indigo-glass ground, one hot
-magenta signal, one electric cyan depth. About 90% of every surface stays
-dark — but the dark is a colour, not a void, and the accents behave like
-light sources, not paint. Text warms as it brightens, as if the magenta were
-doing the lighting; gaps and wallpaper sit a layer darker than the windows,
-so the terminals read as lit panes above the scene.
+The scripts behind the [Bright Future](https://github.com/parker-brown-family/omarchy-bright-future-theme)
+Omarchy theme: the wallpaper renders and the screenshot rig. They live apart
+from the theme because a theme carries no code. Omarchy never runs anything in
+one, and the theme gallery lists only themes that ship none.
 
-![Bright Future, applied](screenshots/terminals.png)
+## Setup
 
-The capture is real and reproducible: `bin/shoot-terminals` stages fastfetch,
-the omarchy palette preview and btop on a spare workspace, shoots the monitor,
-and derives `preview.png` from the same frame.
+Clone both, side by side. The tools find the theme checkout next to them:
 
-## Install
-
+```bash
+git clone https://github.com/parker-brown-family/omarchy-bright-future-theme
 ```
-omarchy theme install https://github.com/parker-brown-family/omarchy-bright-future-theme
+```bash
+git clone https://github.com/parker-brown-family/omarchy-bright-future-tools
 ```
 
-Omarchy names it `bright-future` and applies it on install. Later:
+Anywhere else, point `BRIGHT_FUTURE_THEME` at the theme checkout.
 
-```
-omarchy theme set bright-future
-```
+## What is here
 
-This is a colours-only theme, the shape Omarchy 4 expects from installed
-repos: terminal, btop, Hyprland, the generated Neovim/Helix/VS Code schemes,
-lock screen and keyboard backlight all derive from [`colors.toml`](colors.toml)
-through Omarchy's own templates. Active window borders run a magenta→cyan
-gradient at 45° — the one place both accents meet.
+| Tool | What it does |
+|---|---|
+| `wallpapers/render.sh` | draws the Omarchy wordmark wallpaper from nothing: bash emits SVG, librsvg rasterises it |
+| `wallpapers/conform-sourced.sh` | brings three of the source renders onto the palette: fill-crop to 4K, chroma trim, floor crushed to the void |
+| `wallpapers/grade-night-shift.sh` | flattens Night Shift to grayscale and regrades it through a palette ramp |
+| `bin/shoot-terminals` | stages fastfetch, the palette preview and btop on a spare workspace, shoots the monitor, and writes the theme's `screenshots/terminals.png` and `preview.png` |
+| `bin/apply-live` | re-applies the theme, so an edit to `colors.toml` is what the desktop shows |
+| `bin/backdrop` | points the desktop at one of the theme's backgrounds by file name, so a staged shot is deterministic |
+| `bin/probe-dsp` | introspects Hyprland 0.56's Lua dispatch surface — the measurements `shoot-terminals` is built on |
 
-## Palette
+The wallpaper scripts read the source renders from the theme's
+`backgrounds/src/` and write into its `backgrounds/`. Run against the committed
+sources, they reproduce the committed wallpapers pixel for pixel. They need
+librsvg and ImageMagick; the screenshot rig also needs Hyprland, grim, jq,
+foot, btop, fastfetch and wtype.
 
-| Role | Hex | Where it lands |
-|---|---|---|
-| Signal — accent A | `#ff4fd1` | accent, magenta, active-border start, keyboard backlight |
-| Depth — accent B | `#45e5ff` | active-border end; cyan family `#38d2f5` / `#7deeff` |
-| Ground | `#131637` | background glass, over void shades `#0b0c19` / `#04040b`, raised `#1e2350` |
-| Material | `#221f4e` / `#414780` | selection, muted lines, inactive borders |
-| Text | `#d9cfe8` | foreground, from cool `#6b74a8` dim to warm `#fbf0fb` bright |
+This repository began as a copy of the theme's, so the commits that built these
+scripts are still here.
 
-The full ANSI set lives in [`colors.toml`](colors.toml). The rules this
-instance was cut from — role definitions, the 90/10 chroma budget, hue
-separation, cross-pollination ratios — are in [`PALETTE.md`](PALETTE.md),
-together with how to derive a sibling palette.
-
-## Backgrounds
-
-Five 4K wallpapers — different scenes, one colour physics. The accents behave
-like light something in the world is producing, never like paint. The Omarchy
-wordmark is drawn by [`backgrounds/src/render.sh`](backgrounds/src/render.sh)
-(bash emits SVG and librsvg rasterises it). Four source renders are brought
-onto the palette — one re-lit from grayscale, three conformed by
-[`backgrounds/src/conform-sourced.sh`](backgrounds/src/conform-sourced.sh)
-(fill-crop, chroma trim, floor crushed to the void). All four were generated
-for this theme with GPT and processed locally; their retained source renders
-live in [`backgrounds/src/`](backgrounds/src/).
-
-- **Night shift** — GPT-rendered pixel art
-  ([generation conversation](https://chatgpt.com/share/6a9e7cfa-38b4-83e8-91dc-2bb4e7c9d8b3),
-  [`backgrounds/src/night-shift-src.png`](backgrounds/src/night-shift-src.png)),
-  flattened to grayscale and regraded through a palette ramp by
-  [`backgrounds/src/grade-night-shift.sh`](backgrounds/src/grade-night-shift.sh):
-  indigo mass, cyan reticle, magenta doorway.
-- **Low orbit** — the planet at night: a blue city-light network far below,
-  magenta aurora walking the limb, one eclipsed sun. The rotation's loudest
-  frame, deliberately.
-- **Mountain portal** — signal mountain under a dark orb: magenta dawn on one
-  horizon, cyan on the other, the galaxy split between them.
-- **Prospector** — a mining rig chewing an asteroid open under a ringed
-  planet. The only orange in the theme is the heat of the work.
-- **Omarchy** — virtually black; the wordmark catches magenta light from the
-  lower left and cyan from the upper right.
-
-Rendered PNGs are committed — rerun the scripts only to change the art (needs
-librsvg and ImageMagick).
-
-![Night shift](backgrounds/4-night-shift.png)
-
-![Omarchy](backgrounds/omarchy.png)
-
-## License
+## Licence
 
 MIT

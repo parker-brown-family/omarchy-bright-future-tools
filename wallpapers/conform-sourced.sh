@@ -7,8 +7,9 @@
 # stripped: about a twentieth of the PNGs they replaced); rerun to retune.
 set -euo pipefail
 
-SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
-BG_DIR="$(dirname "$SRC_DIR")"
+. "$(dirname "$0")/../lib/theme.sh"
+SRC_DIR="$THEME_ROOT/backgrounds/src"
+BG_DIR="$THEME_ROOT/backgrounds"
 
 conform() { # src out brightness% saturation% [shave WxH — baked-in frame edges]
   magick "$SRC_DIR/$1" -shave "${5:-0x0}" \
